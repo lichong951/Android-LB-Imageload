@@ -2,7 +2,6 @@ package com.luobotec.lbimageloaderlibrary;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.LruCache;
 import android.widget.ImageView;
 
 import java.io.IOException;
@@ -20,8 +19,9 @@ import java.util.concurrent.Executors;
  * @powered by 北京萝卜科技有限公司
  */
 public class ImageLoader {
-    //图片缓存
-    LruCache<String, Bitmap> mImageCache;
+
+    ImageCache imageCache=new ImageCache();
+
     //线程池，线程数量cpu的数量
     ExecutorService mExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -34,12 +34,7 @@ public class ImageLoader {
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         //取四分之一的可用内存作为缓存
         final int cacheSize = maxMemory / 4;
-        mImageCache = new LruCache<String, Bitmap>(cacheSize) {
-            @Override
-            protected int sizeOf(String key, Bitmap bitmap) {
-                return bitmap.getRowBytes() + bitmap.getHeight() / 1024;
-            }
-        };
+
     }
 
     public void displayImage(final String url, final ImageView imageView) {
@@ -54,7 +49,6 @@ public class ImageLoader {
                 if (imageView.getTag().equals(url)) {
                     imageView.setImageBitmap(bitmap);
                 }
-                mImageCache.put(url, bitmap);
             }
         });
     }
