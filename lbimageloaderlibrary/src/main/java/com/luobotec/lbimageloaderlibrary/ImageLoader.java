@@ -19,25 +19,25 @@ import java.util.concurrent.Executors;
  * @powered by 北京萝卜科技有限公司
  */
 public class ImageLoader {
-
-    ImageCache imageCache=new ImageCache();
-
+    //内存缓存
+    ImageCache mImageCache=new MemoryCache();
     //线程池，线程数量cpu的数量
     ExecutorService mExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-    public ImageLoader() {
-        initImageCache();
-    }
-
-    private void initImageCache() {
-        //计算可使用的最大内存
-        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-        //取四分之一的可用内存作为缓存
-        final int cacheSize = maxMemory / 4;
-
+    public void setImageCache(ImageCache cache){
+        mImageCache=cache;
     }
 
     public void displayImage(final String url, final ImageView imageView) {
+        Bitmap bitmap=mImageCache.get(url);
+        if(bitmap!=null) {
+            imageView.setImageBitmap(bitmap);
+            return;
+        }
+        submitLoadRequest(url,imageView);
+    }
+
+    private void submitLoadRequest(final String url, final ImageView imageView) {
         imageView.setTag(url);
         mExecutorService.submit(new Runnable() {
             @Override
@@ -52,6 +52,8 @@ public class ImageLoader {
             }
         });
     }
+
+
 
     public Bitmap downloadImage(String imageUrl) {
         Bitmap bitmap = null;
