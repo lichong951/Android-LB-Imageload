@@ -4,9 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 
+import com.luobotec.lbimageloaderlibrary.utils.CloseUtils;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 /**
  * @author lichong@luobotec.com
@@ -26,17 +27,13 @@ public class DiskCache implements ImageCache{
     public void put(String url,Bitmap bmp ){
         FileOutputStream fileOutputStream=null;
         try {
+            //TODO 对uel进行md5
             fileOutputStream=new FileOutputStream(cacheDir+url);
             bmp.compress(Bitmap.CompressFormat.PNG,100,fileOutputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }finally {
-            if(fileOutputStream!=null)
-                try {
-                fileOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            CloseUtils.closeQuietly(fileOutputStream);
         }
     }
 }
