@@ -16,7 +16,7 @@ import java.io.FileOutputStream;
  * @date 16/6/18  09:38
  * @powered by 北京萝卜科技有限公司
  */
-public class DiskCache implements ImageCache{
+public class DiskCache implements BitmapCache {
     static String cacheDir= Environment.getExternalStorageDirectory()+"/luobotec/cache/";
     //从缓存中获取图片
     public Bitmap get(String url){

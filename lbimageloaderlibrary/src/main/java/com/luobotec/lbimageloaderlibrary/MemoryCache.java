@@ -10,7 +10,7 @@ import android.util.LruCache;
  * @date 16/6/18  09:11
  * @powered by 北京萝卜科技有限公司
  */
-public class MemoryCache implements ImageCache{
+public class MemoryCache implements BitmapCache {
     //图片缓存
     LruCache<String,Bitmap> mMemoryCache;
 

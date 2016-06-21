@@ -9,7 +9,7 @@ import android.graphics.Bitmap;
  * @date 16/6/18  10:19
  * @powered by 北京萝卜科技有限公司
  */
-public interface ImageCache {
+public interface BitmapCache {
     public Bitmap get(String url);
     public void put(String url,Bitmap bmp);
 }

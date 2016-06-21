@@ -20,30 +20,88 @@ import java.util.concurrent.Executors;
  */
 public class ImageLoader {
     //内存缓存
-    ImageCache mImageCache=new MemoryCache();
+    BitmapCache mImageCache = new MemoryCache();
+    //图片加载中显示的图片id
+    int mLoadingImageId;
+    //加载失败时显示的图片ID
+    int mLoadingFailedImageId;
+    //图片加载策略
+    LoadPolicy mLoaderPolicy;
+    private  ImageLoaderConfig mConfig;
+
     //线程池，线程数量cpu的数量
     ExecutorService mExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-    public void setImageCache(ImageCache cache){
-        mImageCache=cache;
+    private volatile static ImageLoader mInstance;
+
+    private ImageLoader() {
+
+    }
+
+    public static ImageLoader getInstance() {
+        if (mInstance == null) {
+            synchronized (ImageLoader.class) {
+                if (mInstance == null) {
+                    mInstance = new ImageLoader();
+                }
+            }
+        }
+        return mInstance;
+    }
+
+    public void init(ImageLoaderConfig config) {
+        mConfig=config;
+        checkConfiguration();
+
+    }
+
+    private void checkConfiguration() {
+            if (mConfig == null) {
+                throw new IllegalStateException("ERROR_NOT_INIT");
+            }
+    }
+
+    public void setImageCache(BitmapCache cache) {
+        mImageCache = cache;
+    }
+
+    public void setLoadingImage(int resId) {
+        mLoadingImageId = resId;
+    }
+
+    public void setLoadingFailedImage(int resId) {
+        mLoadingFailedImageId = resId;
+    }
+
+    public void setLoadingPolicy(LoadPolicy policy) {
+        mLoaderPolicy = policy;
+    }
+
+    public void setThreadCount(int count) {
+        mExecutorService.shutdown();
+        mExecutorService = null;
+        mExecutorService = Executors.newFixedThreadPool(count);
     }
 
     public void displayImage(final String url, final ImageView imageView) {
-        Bitmap bitmap=mImageCache.get(url);
-        if(bitmap!=null) {
+        Bitmap bitmap = mImageCache.get(url);
+        if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
             return;
         }
-        submitLoadRequest(url,imageView);
+        submitLoadRequest(url, imageView);
     }
 
     private void submitLoadRequest(final String url, final ImageView imageView) {
+        imageView.setImageResource(mLoadingImageId);
+
         imageView.setTag(url);
         mExecutorService.submit(new Runnable() {
             @Override
             public void run() {
                 Bitmap bitmap = downloadImage(url);
                 if (bitmap == null) {
+                    imageView.setImageResource(mLoadingFailedImageId);
                     return;
                 }
                 if (imageView.getTag().equals(url)) {
@@ -52,7 +110,6 @@ public class ImageLoader {
             }
         });
     }
-
 
 
     public Bitmap downloadImage(String imageUrl) {
@@ -70,4 +127,5 @@ public class ImageLoader {
         return bitmap;
 
     }
+
 }
