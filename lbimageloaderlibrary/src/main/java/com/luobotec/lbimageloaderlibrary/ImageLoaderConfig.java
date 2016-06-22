@@ -72,6 +72,7 @@ public class ImageLoaderConfig {
         public ImageLoaderConfig create(){
             ImageLoaderConfig config=new ImageLoaderConfig();
             applyConfig(config);
+
             return config;
         }
 

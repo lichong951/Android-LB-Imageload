@@ -19,16 +19,8 @@ import java.util.concurrent.Executors;
  * @powered by 北京萝卜科技有限公司
  */
 public class ImageLoader {
-    //内存缓存
-    BitmapCache mImageCache = new MemoryCache();
-    //图片加载中显示的图片id
-    int mLoadingImageId;
-    //加载失败时显示的图片ID
-    int mLoadingFailedImageId;
-    //图片加载策略
-    LoadPolicy mLoaderPolicy;
+    private static final String TAG = ImageLoader.class.getSimpleName();
     private  ImageLoaderConfig mConfig;
-
     //线程池，线程数量cpu的数量
     ExecutorService mExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -61,21 +53,8 @@ public class ImageLoader {
             }
     }
 
-    public void setImageCache(BitmapCache cache) {
-        mImageCache = cache;
-    }
 
-    public void setLoadingImage(int resId) {
-        mLoadingImageId = resId;
-    }
 
-    public void setLoadingFailedImage(int resId) {
-        mLoadingFailedImageId = resId;
-    }
-
-    public void setLoadingPolicy(LoadPolicy policy) {
-        mLoaderPolicy = policy;
-    }
 
     public void setThreadCount(int count) {
         mExecutorService.shutdown();
@@ -84,7 +63,8 @@ public class ImageLoader {
     }
 
     public void displayImage(final String url, final ImageView imageView) {
-        Bitmap bitmap = mImageCache.get(url);
+        checkConfiguration();
+        Bitmap bitmap = mConfig.bitmapCache.get(url);
         if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
             return;
@@ -93,15 +73,15 @@ public class ImageLoader {
     }
 
     private void submitLoadRequest(final String url, final ImageView imageView) {
-        imageView.setImageResource(mLoadingImageId);
-
+        checkConfiguration();
+        imageView.setImageResource(mConfig.displayConfig.loadingResId);
         imageView.setTag(url);
         mExecutorService.submit(new Runnable() {
             @Override
             public void run() {
                 Bitmap bitmap = downloadImage(url);
                 if (bitmap == null) {
-                    imageView.setImageResource(mLoadingFailedImageId);
+                    imageView.setImageResource(mConfig.displayConfig.failedResId);
                     return;
                 }
                 if (imageView.getTag().equals(url)) {
