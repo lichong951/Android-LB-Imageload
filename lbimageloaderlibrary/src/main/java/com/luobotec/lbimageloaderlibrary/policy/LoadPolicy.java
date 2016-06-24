@@ -1,4 +1,6 @@
-package com.luobotec.lbimageloaderlibrary;
+package com.luobotec.lbimageloaderlibrary.policy;
+
+import com.luobotec.lbimageloaderlibrary.BitmapRequest;
 
 /**
  * @author lichong@luobotec.com
@@ -8,4 +10,5 @@ package com.luobotec.lbimageloaderlibrary;
  * @powered by 北京萝卜科技有限公司
  */
 public interface LoadPolicy {
+    public int compare(BitmapRequest request1, BitmapRequest request2);
 }

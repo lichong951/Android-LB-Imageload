@@ -55,7 +55,6 @@ public class ImageLoader {
 
 
 
-
     public void setThreadCount(int count) {
         mExecutorService.shutdown();
         mExecutorService = null;
@@ -69,6 +68,14 @@ public class ImageLoader {
             imageView.setImageBitmap(bitmap);
             return;
         }
+        submitLoadRequest(url, imageView);
+    }
+    //TODO 未完善
+    public void displayImage(final String url, final ImageView imageView,final DisplayConfig config,final ImageListener listener) {
+        BitmapRequest request=new BitmapRequest();
+
+        request.setLoadPolicy(mConfig.loadPolicy);
+
         submitLoadRequest(url, imageView);
     }
 

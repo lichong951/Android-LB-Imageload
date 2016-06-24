@@ -1,5 +1,7 @@
 package com.luobotec.lbimageloaderlibrary;
 
+import com.luobotec.lbimageloaderlibrary.policy.LoadPolicy;
+
 /**
  * @author lichong@luobotec.com
  * @version V1.0
