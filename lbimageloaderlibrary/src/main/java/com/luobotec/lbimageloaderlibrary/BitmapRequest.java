@@ -10,7 +10,7 @@ import com.luobotec.lbimageloaderlibrary.policy.SerialPolicy;
  * @date 16/6/24  08:59
  * @powered by 北京萝卜科技有限公司
  */
-public class BitmapRequest implements Comparable<BitmapRequest> {
+public class BitmapRequest extends Thread implements Comparable<BitmapRequest> {
     public int serialNum;
     LoadPolicy mLoadPolicy = new SerialPolicy();
 
@@ -23,4 +23,6 @@ public class BitmapRequest implements Comparable<BitmapRequest> {
     public int compareTo(BitmapRequest another) {
         return mLoadPolicy.compare(this, another);
     }
+
+
 }

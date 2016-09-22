@@ -1,1 +1,1 @@
-include ':app', ':lbimageloaderlibrary', ':camera'
+include ':app', ':lbimageloaderlibrary'
