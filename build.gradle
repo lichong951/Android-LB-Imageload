@@ -10,14 +10,42 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+
 }
+
+//全局配置
+//ext{
+//    compileSdkVersion= 23
+//    buildToolsVersion ="23.0.3"
+//    minSdkVersion= 15
+//    targetSdkVersion= 23
+//    versionCode= 1
+//    versionName= "1.0"
+//}
 
 allprojects {
     repositories {
         jcenter()
     }
+
+    ext {
+        COMPILE_SDK_VERSION = 23
+        BUILD_TOOLS_VERSION = "23.0.3"
+        MIN_SDK_VERSION = 15
+        TARGET_SDK_VERSION = 23
+        VERSION_CODE = 1
+        VERSION_NAME = "1.0"
+    }
+
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+task printProperties<<{
+    println project
+    println project.name
+    println project.buildDir
+
 }

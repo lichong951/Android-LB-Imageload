@@ -12,15 +12,19 @@ import com.luobotec.lbimageloaderlibrary.policy.SerialPolicy;
  */
 public class BitmapRequest extends Thread implements Comparable<BitmapRequest> {
     public int serialNum;
+
     LoadPolicy mLoadPolicy = new SerialPolicy();
 
 
-    public void setLoadPolicy(LoadPolicy loadPolicy){
-        mLoadPolicy=loadPolicy;
+    public void setLoadPolicy(LoadPolicy loadPolicy) {
+
+        mLoadPolicy = loadPolicy;
     }
+
 
     @Override
     public int compareTo(BitmapRequest another) {
+
         return mLoadPolicy.compare(this, another);
     }
 

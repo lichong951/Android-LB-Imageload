@@ -98,8 +98,12 @@ public class ImageLoader {
         });
     }
 
-
+    /**
+     * @author lichong@luobotec.com
+     * created at 16/9/23
+     */
     public Bitmap downloadImage(String imageUrl) {
+
         Bitmap bitmap = null;
         try {
             URL url = new URL(imageUrl);

@@ -10,5 +10,12 @@ import com.luobotec.lbimageloaderlibrary.BitmapRequest;
  * @powered by 北京萝卜科技有限公司
  */
 public interface LoadPolicy {
+    /**
+    *
+     *
+    *
+    *@author lichong@luobotec.com
+    *created at 16/9/23
+    */
     public int compare(BitmapRequest request1, BitmapRequest request2);
 }
