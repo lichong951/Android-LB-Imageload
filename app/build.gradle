@@ -7,6 +7,7 @@ android {
     lintOptions{
         abortOnError false
     }
+
     defaultConfig {
         applicationId "com.luobotec.android_lb_imageload"
         minSdkVersion MIN_SDK_VERSION
@@ -28,16 +29,19 @@ android {
 
 
     signingConfigs{
+
+
         lichong{
-            storeFile file("lichong_key.jks")
-//            storePassword"xxx"
-//            keyAlias"xxxxx"
-//            keyPassword"xxxxx"
+            storeFile file("test_key.jks")
+            storePassword"123456"
+            keyAlias"test"
+            keyPassword"123456"
         }
+
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 //自定义构建体系
@@ -46,13 +50,12 @@ android {
 //        }
 
     //构建类型buildType的继承 自定义签名使用
-        lichong.initWith(buildTypes.release)
+    //    lichong.initWith(buildTypes.release)
         lichong {
             signingConfig signingConfigs.lichong
             applicationIdSuffix ".lichong"
 
         }
-        type
 
     }
 
