@@ -40,4 +40,12 @@ public class MemoryCache implements BitmapCache {
     public Bitmap get(String url){
         return mMemoryCache.get(url);
     }
+
+    public String[] keys() {
+        return new String[0];
+    }
+
+    public void remove(String keysToRemove) {
+
+    }
 }
