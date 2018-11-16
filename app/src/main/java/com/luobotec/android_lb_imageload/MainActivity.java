@@ -3,6 +3,7 @@ package com.luobotec.android_lb_imageload;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -32,5 +33,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void go2Anim(View view){
+        AnimDemoActivity.actionActivity(this);
     }
 }

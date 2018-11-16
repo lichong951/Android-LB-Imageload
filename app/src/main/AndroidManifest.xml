@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.luobotec.android_lb_imageload"
-    android:sharedUserId="android.uid.system"
-    >
+          package="com.luobotec.android_lb_imageload">
 
     <application
         android:allowBackup="true"
@@ -12,13 +10,28 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <meta-data android:name="PRODUCT"
+
+        <meta-data
+            android:name="PRODUCT"
             android:value="${CHANNEL_VALUE}"/>
+
+        <activity android:name=".AnimDemoActivity">
+        </activity>
+        <activity
+            android:name=".anim.TransititonActivity"
+            android:label="@string/title_activity_transititon"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".anim.ContactActivity"
+            android:label="@string/title_activity_contact"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

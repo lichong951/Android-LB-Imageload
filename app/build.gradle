@@ -4,10 +4,9 @@ android {
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
 
-    lintOptions{
+    lintOptions {
         abortOnError false
     }
-
     defaultConfig {
         applicationId "com.luobotec.android_lb_imageload"
         minSdkVersion MIN_SDK_VERSION
@@ -15,12 +14,22 @@ android {
         versionCode VERSION_CODE
         versionName VERSION_NAME
     }
-    productFlavors{
-        xiaomi {}
-        _360 {}
-        baidu {}
-        wandoujia {}
 
+    // Specifies the flavor dimensions you want to use. The order in which you
+    // list each dimension determines its priority, from highest to lowest,
+    // when Gradle merges variant sources and configurations. You must assign
+    // each product flavor you configure to one of the flavor dimensions.
+    flavorDimensions "mode"
+
+    productFlavors {
+        xiaomi {
+            // Assigns this product flavor to the "mode" flavor dimension.
+            dimension "mode"
+        }
+        _360 {
+            // Assigns this product flavor to the "mode" flavor dimension.
+            dimension "mode"
+        }
     }
 
     productFlavors.all {
@@ -28,16 +37,13 @@ android {
     }
 
 
-    signingConfigs{
-
-
-        lichong{
+    signingConfigs {
+        lichong {
             storeFile file("test_key.jks")
-            storePassword"123456"
-            keyAlias"test"
-            keyPassword"123456"
+            storePassword "123456"
+            keyAlias "test"
+            keyPassword "123456"
         }
-
     }
     buildTypes {
         release {
@@ -49,30 +55,23 @@ android {
 //            applicationIdSuffix ".luobotec"
 //        }
 
-    //构建类型buildType的继承 自定义签名使用
-    //    lichong.initWith(buildTypes.release)
-        lichong {
-            signingConfig signingConfigs.lichong
-            applicationIdSuffix ".lichong"
-
-        }
+        //构建类型buildType的继承 自定义签名使用
+//        lichong.initWith(buildTypes.release)
+//        lichong {
+//            signingConfig signingConfigs.lichong
+//            applicationIdSuffix ".lichong"
+//
+//        }
+//
 
     }
-
-//    sourceSets{
-//        main{
-//            res.srcDirs=[
-//                    'src/main/res/',
-//                    'src/main/res/layout/activity',
-//                    'src/main/res/layout/fragment'
-//            ]
-//        }
-//    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile project(':lbimageloaderlibrary')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:design:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    api 'com.android.support:appcompat-v7:27.+'
+    api project(':lbimageloaderlibrary')
 }

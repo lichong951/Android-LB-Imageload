@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Android-LB-Imageload</string>
+    <string name="title_activity_transititon">共享元素动画</string>
+    <string name="title_activity_contact">ContactActivity</string>
 </resources>
